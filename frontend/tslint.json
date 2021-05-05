@@ -146,6 +146,7 @@
       "element",
       "app",
       "kebab-case"
-    ]
+    ],
+    "newline-per-chained-call": true
   }
 }

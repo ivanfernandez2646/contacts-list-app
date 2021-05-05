@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +9,7 @@ import { NavHeaderComponent } from './components/home/nav-header/nav-header.comp
 import { HomeComponent } from './components/home/home.component';
 import { ContactListComponent } from './components/home/contacts/contact-list/contact-list.component';
 import { ContactCardComponent } from './components/home/contacts/contact-card/contact-card.component';
+import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ContactCardComponent } from './components/home/contacts/contact-card/co
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
