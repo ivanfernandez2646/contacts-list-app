@@ -1,2 +1,7 @@
 <p>login works!</p>
-<p>{{ fetchLogin | async }}</p>
+<ul>
+    <li *ngFor="let user of fetchGetUsers | async">{{user.username}}-{{user._id}}</li>
+</ul>
+<ul>
+    <li *ngFor="let contact of fetchGetContacts | async">{{contact.name}}-{{contact._id}}</li>
+</ul>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Contact } from 'src/app/models/contact';
+import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -8,12 +10,14 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  fetchLogin: Observable<string>;
+  fetchGetUsers: Observable<User[]>;
+  fetchGetContacts: Observable<Contact[]>;
 
   constructor(private loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.fetchLogin = this.loginService.login();
+    this.fetchGetUsers = this.loginService.getUsers();
+    this.fetchGetContacts = this.loginService.getContacts();
   }
 
 }
