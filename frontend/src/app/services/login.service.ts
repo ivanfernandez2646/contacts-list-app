@@ -14,20 +14,25 @@ export class LoginService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // login(): Observable<string> {
-  //   return this.httpClient.get<string>(`${this.apiRoute}/`, { responseType: 'text' as 'json' })
+  login(username: string, password: string): Observable<User> {
+    return this.httpClient.post<User>(`${this.apiRoute}/login`, { username, password })
+      .pipe(catchError(e => throwError(e)));
+  }
+
+  register(username: string, password: string): Observable<User> {
+    return this.httpClient.post<User>(`${this.apiRoute}/register`, { username, password })
+      .pipe(catchError(e => throwError(e)));
+  }
+
+  // // Fake get users
+  // getUsers(): Observable<User[]> {
+  //   return this.httpClient.get<User[]>(`${this.apiRoute}/users`)
   //     .pipe(catchError(e => throwError(e)));
   // }
 
-  // Fake get users
-  getUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(`${this.apiRoute}/users`)
-      .pipe(catchError(e => throwError(e)));
-  }
-
-  // Fake get contacts
-  getContacts(): Observable<Contact[]> {
-    return this.httpClient.get<Contact[]>(`${this.apiRoute}/contacts`)
-      .pipe(catchError(e => throwError(e)));
-  }
+  // // Fake get contacts
+  // getContacts(): Observable<Contact[]> {
+  //   return this.httpClient.get<Contact[]>(`${this.apiRoute}/contacts`)
+  //     .pipe(catchError(e => throwError(e)));
+  // }
 }

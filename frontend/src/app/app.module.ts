@@ -9,7 +9,10 @@ import { NavHeaderComponent } from './components/home/nav-header/nav-header.comp
 import { HomeComponent } from './components/home/home.component';
 import { ContactListComponent } from './components/home/contacts/contact-list/contact-list.component';
 import { ContactCardComponent } from './components/home/contacts/contact-card/contact-card.component';
-import { ApiInterceptor } from './interceptors/api.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,12 @@ import { ApiInterceptor } from './interceptors/api.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
