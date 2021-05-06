@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --color-primary: #673ab7;
+  --color-accent: #ffd740;
+  --color-warn: #f44336;
+  --header-height: 10vh;
+}
 
 html,
 body {
@@ -7,6 +13,12 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #303030;
-  color: white;
+}
+
+main {
+  height: calc(100% - var(--header-height));
+}
+
+main > * {
+  padding: 2rem;
 }

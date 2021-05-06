@@ -1,27 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Contact } from '../models/contact';
 import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  apiRoute = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  apiRoute = environment.apiUrl;
+  private loggedUserSource = new ReplaySubject<User>(1);
+  loggedUser$ = this.loggedUserSource.asObservable();
+
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   login(username: string, password: string): Observable<User> {
     return this.httpClient.post<User>(`${this.apiRoute}/login`, { username, password })
-      .pipe(catchError(e => throwError(e)));
+      .pipe(
+        map((res: User) => {
+          localStorage.setItem('loggedUser', JSON.stringify(res));
+          this.loggedUserSource.next(res);
+          return res;
+        }),
+        catchError(e => throwError(e)));
   }
 
   register(username: string, password: string): Observable<User> {
     return this.httpClient.post<User>(`${this.apiRoute}/register`, { username, password })
       .pipe(catchError(e => throwError(e)));
+  }
+
+  logout(): void {
+    localStorage.removeItem('loggedUser');
+    this.loggedUserSource.next(null);
+  }
+
+  setUserLogged(): void {
+    this.loggedUserSource.next(JSON.parse(localStorage.getItem('loggedUser')));
   }
 
   // // Fake get users

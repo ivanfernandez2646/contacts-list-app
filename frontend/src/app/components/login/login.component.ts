@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { Contact } from 'src/app/models/contact';
-import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -16,7 +14,7 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) {
 
   }
 
@@ -28,9 +26,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const username = this.loginForm.get('username').value;
       const password = this.loginForm.get('password').value;
-      this.loginService.login(username, password).subscribe(res => {
-        console.log(res);
-      });
+      this.loginService.login(username, password)
+        .subscribe({
+          next: (user) => {
+            console.log(user);
+            this.router.navigateByUrl('/home');
+          },
+          error: (err) => console.log(err)
+        });
     }
   }
 

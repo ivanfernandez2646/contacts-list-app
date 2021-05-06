@@ -1,6 +1,6 @@
-<div>
+<div id="loginContainer">
     <h1>Login</h1>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
             <input matInput type="text" id="txtUsername" placeholder="@username" formControlName="username">
@@ -11,6 +11,9 @@
             <input matInput type="password" id="txtPassword" placeholder="password" formControlName="password">
             <mat-error *ngIf="loginForm.controls['password'].invalid">Password obligatory</mat-error>
         </mat-form-field>
-        <input type="submit" value="Send" />
+        <div id="loginFormButtons">
+            <button mat-raised-button color="primary" type="submit">Log in</button>
+            <button mat-raised-button color="warn" type="submit">Sign in</button>
+        </div>
     </form>
 </div>

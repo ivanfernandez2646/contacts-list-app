@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { NavHeaderComponent } from './components/home/nav-header/nav-header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { ContactListComponent } from './components/home/contacts/contact-list/contact-list.component';
 import { ContactCardComponent } from './components/home/contacts/contact-card/contact-card.component';
@@ -13,12 +13,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavHeaderComponent,
+    HeaderComponent,
     HomeComponent,
     ContactListComponent,
     ContactCardComponent
@@ -31,7 +32,8 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
