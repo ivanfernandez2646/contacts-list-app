@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/login.service';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -8,14 +10,29 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  loggedUser: User;
+  isLoginPage: boolean;
 
-  constructor(public loginService: LoginService, private router: Router) { }
+  constructor(public userService: UserService, private router: Router, private location: Location) {
+  }
 
   ngOnInit(): void {
+    this.userService.loggedUser$.subscribe(user => this.loggedUser = user);
+    this.isLoginPage = this.location.path() === '/login' || this.location.path() === '';
   }
 
   logout(): void {
-    this.loginService.logout();
+    this.userService.logout();
     this.router.navigateByUrl('/');
+  }
+
+  goRegisterPage(): void {
+    this.isLoginPage = false;
+    this.router.navigateByUrl('/register');
+  }
+
+  goLoginPage(): void {
+    this.isLoginPage = true;
+    this.router.navigateByUrl('/login');
   }
 }

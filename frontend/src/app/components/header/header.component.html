@@ -1,6 +1,23 @@
 <header>
-    <h1>Mobile Contacts</h1>
-    <div *ngIf="loginService.loggedUser$ | async">
-        <span><button (click)="logout()">Logout</button>asda</span>
+    <div id="headerWrapper" class="text-center">
+        <div>
+            <h1 id="headerTitle">Mobile Contacts</h1>
+            <p *ngIf="loggedUser">Welcome {{ loggedUser.username }}!!</p>
+        </div>
+        <ng-container>
+            <div *ngIf="loggedUser; else noLogged">
+                <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+            </div>
+            <ng-template #noLogged>
+                <div *ngIf="isLoginPage; else isRegisterPage">
+                    <button mat-raised-button color="accent" (click)="goRegisterPage()">Register</button>
+                </div>
+                <ng-template #isRegisterPage>
+                    <div>
+                        <button mat-raised-button color="accent" (click)="goLoginPage()">Log in</button>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </ng-container>
     </div>
 </header>

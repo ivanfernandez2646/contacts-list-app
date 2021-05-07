@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
-  loginForm = this.fb.group({
+export class RegisterComponent implements OnInit {
+  registerForm = this.fb.group({
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
@@ -23,10 +23,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      const username = this.loginForm.get('username').value;
-      const password = this.loginForm.get('password').value;
-      this.userService.login(username, password)
+    if (this.registerForm.valid) {
+      const username = this.registerForm.get('username').value;
+      const password = this.registerForm.get('password').value;
+      this.userService.register(username, password)
         .subscribe({
           next: (user) => {
             console.log(user);
@@ -36,5 +36,4 @@ export class LoginComponent implements OnInit {
         });
     }
   }
-
 }

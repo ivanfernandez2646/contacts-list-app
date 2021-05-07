@@ -1,18 +1,18 @@
-<div id="loginContainer">
-    <h1>Log in</h1>
-    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<div id="registerContainer">
+    <h1>Sign in</h1>
+    <form id="registerForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
             <input matInput type="text" id="txtUsername" placeholder="@username" formControlName="username">
-            <mat-error *ngIf="loginForm.controls['username'].invalid">Username obligatory</mat-error>
+            <mat-error *ngIf="registerForm.controls['username'].invalid">Username obligatory</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input matInput type="password" id="txtPassword" placeholder="password" formControlName="password">
-            <mat-error *ngIf="loginForm.controls['password'].invalid">Password obligatory</mat-error>
+            <mat-error *ngIf="registerForm.controls['password'].invalid">Password obligatory</mat-error>
         </mat-form-field>
-        <div id="loginFormButtons">
-            <button mat-raised-button color="primary" type="submit">Log in</button>
+        <div id="registerFormButtons">
+            <button mat-raised-button color="warn" type="submit">Sign in</button>
         </div>
     </form>
 </div>

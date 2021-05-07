@@ -9,7 +9,7 @@ import { User } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class UserService {
 
   apiRoute = environment.apiUrl;
   private loggedUserSource = new ReplaySubject<User>(1);
@@ -21,16 +21,22 @@ export class LoginService {
     return this.httpClient.post<User>(`${this.apiRoute}/login`, { username, password })
       .pipe(
         map((res: User) => {
-          localStorage.setItem('loggedUser', JSON.stringify(res));
-          this.loggedUserSource.next(res);
+          this.setUserLogged(res);
           return res;
         }),
         catchError(e => throwError(e)));
   }
 
   register(username: string, password: string): Observable<User> {
+    console.log(username);
+
     return this.httpClient.post<User>(`${this.apiRoute}/register`, { username, password })
-      .pipe(catchError(e => throwError(e)));
+      .pipe(
+        map((res: User) => {
+          this.setUserLogged(res);
+          return res;
+        }),
+        catchError(e => throwError(e)));
   }
 
   logout(): void {
@@ -38,8 +44,13 @@ export class LoginService {
     this.loggedUserSource.next(null);
   }
 
-  setUserLogged(): void {
-    this.loggedUserSource.next(JSON.parse(localStorage.getItem('loggedUser')));
+  setUserLogged(user?: User): void {
+    if (user) {
+      localStorage.setItem('loggedUser', JSON.stringify(user));
+      this.loggedUserSource.next(user);
+    } else {
+      this.loggedUserSource.next(JSON.parse(localStorage.getItem('loggedUser')));
+    }
   }
 
   // // Fake get users

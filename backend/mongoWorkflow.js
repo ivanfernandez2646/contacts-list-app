@@ -61,7 +61,7 @@ async function login(username, password) {
 async function register(username, password) {
     if (!await existUser(username)) {
         const newUser = new User();
-        newUser.name = username;
+        newUser.username = username;
         newUser.passwordHash = enc.encryptPassword(password);
         const userSaved = await newUser.save();
         return userSaved;
