@@ -1,22 +1,42 @@
 header {
-  height: var(--header-height);
+  min-height: var(--header-height);
   background-color: var(--color-primary);
   color: white;
 }
 
 #headerWrapper {
   width: 50%;
-  height: inherit;
+  min-height: inherit;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 #headerWrapper > * {
   flex-basis: 100%;
 }
 
-#headerTitle {
-  margin-bottom: 0;
+#headerWrapperLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+}
+
+#headerWrapperLeft > p {
+  margin: 0;
+}
+
+#contactsImg {
+  height: auto;
+  width: 3rem;
+}
+
+@media only screen and (max-width: 600px) {
+  #headerWrapper {
+    width: auto;
+  }
 }
