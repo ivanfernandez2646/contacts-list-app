@@ -28,8 +28,6 @@ export class UserService {
   }
 
   register(username: string, password: string): Observable<User> {
-    console.log(username);
-
     return this.httpClient.post<User>(`${this.apiRoute}/register`, { username, password })
       .pipe(
         map((res: User) => {

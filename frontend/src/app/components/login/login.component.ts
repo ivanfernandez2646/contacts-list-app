@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
-    username: ['', Validators.required],
+    username: ['@', Validators.minLength(2)],
     password: ['', Validators.required]
   });
 
@@ -30,12 +30,19 @@ export class LoginComponent implements OnInit {
       this.userService.login(username, password)
         .subscribe({
           next: (user) => {
-            console.log(user);
             this.router.navigateByUrl('/home');
             this.snackBar.open('Log in successfull', 'OK', { duration: 3000 });
-          },
-          error: (err) => console.log(err)
+          }
         });
+    }
+  }
+
+  onUsernameChange(value: string): void {
+    let usernameValue = this.loginForm.get('username').value;
+    if (usernameValue[0] !== '@') {
+      usernameValue = '@' + usernameValue;
+      this.loginForm.get('username')
+        .setValue(usernameValue);
     }
   }
 

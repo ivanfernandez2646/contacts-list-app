@@ -12,6 +12,7 @@
 #registerFormButtons {
   width: 50%;
   margin: 0 auto;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;

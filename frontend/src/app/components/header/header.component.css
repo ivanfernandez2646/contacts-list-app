@@ -1,18 +1,16 @@
 header {
   min-height: var(--header-height);
+  display: flex;
   background-color: var(--color-primary);
   color: white;
 }
 
 #headerWrapper {
   width: 50%;
-  min-height: inherit;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 #headerWrapper > * {
@@ -32,11 +30,18 @@ header {
 
 #contactsImg {
   height: auto;
-  width: 3rem;
+  width: 5rem;
 }
 
 @media only screen and (max-width: 600px) {
   #headerWrapper {
-    width: auto;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  #contactsImg {
+    height: auto;
+    width: 4rem;
   }
 }

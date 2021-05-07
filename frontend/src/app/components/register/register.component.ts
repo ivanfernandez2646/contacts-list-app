@@ -10,9 +10,11 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  texto = 'a';
   registerForm = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required]
+    username: ['@', Validators.minLength(2)],
+    password: ['', Validators.required],
+    confirmPassword: ['', Validators.required]
   });
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private snackBar: MatSnackBar) {
@@ -30,12 +32,19 @@ export class RegisterComponent implements OnInit {
       this.userService.register(username, password)
         .subscribe({
           next: (user) => {
-            console.log(user);
             this.router.navigateByUrl('/home');
             this.snackBar.open('Sign in successfull', 'OK', { duration: 3000 });
-          },
-          error: (err) => console.log(err)
+          }
         });
+    }
+  }
+
+  onUsernameChange(value: string): void {
+    let usernameValue = this.registerForm.get('username').value;
+    if (usernameValue[0] !== '@') {
+      usernameValue = '@' + usernameValue;
+      this.registerForm.get('username')
+        .setValue(usernameValue);
     }
   }
 }
