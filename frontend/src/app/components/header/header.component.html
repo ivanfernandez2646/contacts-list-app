@@ -5,7 +5,8 @@
             <p *ngIf="loggedUser">Welcome {{ loggedUser.username }}!!</p>
         </div>
         <ng-container>
-            <div *ngIf="loggedUser; else noLogged">
+            <div id="headerWrapperRight" *ngIf="loggedUser; else noLogged">
+                <button mat-raised-button color="accent" (click)="openDialog()">Create contact</button>
                 <button mat-raised-button color="warn" (click)="logout()">Logout</button>
             </div>
             <ng-template #noLogged>

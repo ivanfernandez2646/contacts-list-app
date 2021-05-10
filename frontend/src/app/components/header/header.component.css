@@ -30,6 +30,17 @@ header {
   margin: 0;
 }
 
+#headerWrapperRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+}
+
+#headerWrapperRight button {
+  width: fit-content;
+}
+
 #contactsImg {
   height: auto;
   width: 5rem;

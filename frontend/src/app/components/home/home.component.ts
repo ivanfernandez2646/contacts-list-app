@@ -11,16 +11,23 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeComponent implements OnInit {
   loggedUser: User;
+  userHasDoneOperation: boolean;
   userContacts: Contact[];
 
   constructor(private contactService: ContactService, private userService: UserService) {
     this.userService.loggedUser$.subscribe(user => this.loggedUser = user);
+    this.contactService.userHasDoneOperation$.subscribe(res => {
+      if (res) {
+        this.getContactsByUserId();
+      }
+    });
   }
 
   ngOnInit(): void {
-    // const newContact: Contact = { name: 'Test', lastName: 'Frontend', telephone: '123456789' };
-    // this.contactService.createContact(this.loggedUser._id, newContact)
-    //   .subscribe(res => console.log(res));
+    this.getContactsByUserId();
+  }
+
+  getContactsByUserId(): void {
     this.contactService.getContactsByUserId(this.loggedUser._id)
       .subscribe(res => this.userContacts = res);
   }

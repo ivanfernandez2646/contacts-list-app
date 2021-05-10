@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Contact } from '../models/contact';
@@ -11,6 +11,8 @@ import { Contact } from '../models/contact';
 export class ContactService {
 
   apiRoute = environment.apiUrl;
+  private userHasDoneOperationSource = new ReplaySubject<boolean>(1);
+  userHasDoneOperation$ = this.userHasDoneOperationSource.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,9 +27,11 @@ export class ContactService {
   }
 
   createContact(userId: string, contact: Contact): Observable<Contact> {
+    this.userHasDoneOperationSource.next(undefined);
     return this.httpClient.post<Contact>(`${this.apiRoute}/contacts`, { userId, ...contact })
       .pipe(
         map((res: Contact) => {
+          this.userHasDoneOperationSource.next(true);
           return res;
         }),
         catchError(e => throwError(e))

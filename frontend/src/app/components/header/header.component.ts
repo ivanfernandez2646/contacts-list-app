@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactCreateEditModalComponent } from '../home/contacts/contact-create-edit-modal/contact-create-edit-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +15,7 @@ export class HeaderComponent implements OnInit {
   loggedUser: User;
   isLoginPage: boolean;
 
-  constructor(public userService: UserService, private router: Router, private location: Location) {
+  constructor(public userService: UserService, private router: Router, private location: Location, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -35,5 +37,9 @@ export class HeaderComponent implements OnInit {
   goLoginPage(): void {
     this.isLoginPage = true;
     this.router.navigateByUrl('/login');
+  }
+
+  openDialog(): void {
+    this.dialog.open(ContactCreateEditModalComponent);
   }
 }

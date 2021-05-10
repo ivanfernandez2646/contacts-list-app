@@ -10,7 +10,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  texto = 'a';
   registerForm = this.fb.group({
     username: ['@', Validators.minLength(2)],
     password: ['', Validators.required],

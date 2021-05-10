@@ -19,6 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ContactCreateEditModalComponent } from './components/home/contacts/contact-create-edit-modal/contact-create-edit-modal.component';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     HomeComponent,
     ContactListComponent,
     ContactCardComponent,
-    RegisterComponent
+    RegisterComponent,
+    ContactCreateEditModalComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatSnackBarModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     {
