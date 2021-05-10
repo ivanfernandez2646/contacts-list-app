@@ -24,7 +24,7 @@ app.post('/login', async (req, res) => {
         const loggedUser = await mongoWorkflow.login(username, password);
         res.send(loggedUser);
     } catch (err) {
-        res.send(401, err);
+        res.status(401).send(err.message);
     }
 });
 
@@ -35,7 +35,7 @@ app.post('/register', async (req, res) => {
         const registeredUser = await mongoWorkflow.register(username, password);
         res.send(registeredUser);
     } catch (err) {
-        res.send(401, err);
+        res.status(401).send(err.message);
     }
 });
 
@@ -44,7 +44,7 @@ app.get('/users', async (req, res) => {
         const users = await mongoWorkflow.getUsers();
         res.send(users);
     } catch (err) {
-        res.send(500, err);
+        res.status(500).send(err.message);
     }
 });
 
@@ -53,11 +53,12 @@ app.get('/contacts', async (req, res) => {
         const contacts = await mongoWorkflow.getContacts();
         res.send(contacts);
     } catch (err) {
-        res.send(500, err);
+        res.status(500).send(err.message);
     }
 });
 
 app.post('/contacts', async (req, res) => {
+    console.log(req.body);
     const name = req.body.name;
     const lastName = req.body.lastName;
     const telephone = req.body.telephone;
@@ -65,7 +66,7 @@ app.post('/contacts', async (req, res) => {
         const createdContact = await mongoWorkflow.createContact(name, lastName, telephone);
         res.send(createdContact);
     } catch (err) {
-        res.send(500, err);
+        res.status(500).send(err.message);
     }
 });
 

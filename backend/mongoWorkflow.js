@@ -17,7 +17,10 @@ db.once('open', function () {
 
 // Schemas
 const userSchema = new mongoose.Schema({
-    username: String,
+    username: {
+        type: String,
+        required: true
+    },
     passwordHash: {
         type: String,
         default: null
@@ -31,9 +34,18 @@ const userSchema = new mongoose.Schema({
 });
 
 const contactSchema = new mongoose.Schema({
-    name: String,
-    lastName: String,
-    telephone: String
+    name: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    telephone: {
+        type: String,
+        required: true
+    }
 }, {
     versionKey: false
 });
@@ -48,11 +60,11 @@ async function login(username, password) {
     });
 
     if (!userLogged) {
-        throw 'User not found';
+        throw new Error('User not found');
     }
 
     if (!enc.compare(password, userLogged.passwordHash)) {
-        throw 'Password incorrect';
+        throw new Error('Password incorrect');
     }
 
     return userLogged;
@@ -67,10 +79,11 @@ async function register(username, password) {
         return userSaved;
     }
 
-    throw 'Username exist in db';
+    throw new Error('Username exist in db');
 }
 
 async function createContact(name, lastName, telephone) {
+    console.log(name, lastName, telephone)
     const newContact = new Contact();
     newContact.name = name;
     newContact.lastName = lastName;
