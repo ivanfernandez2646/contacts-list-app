@@ -17,6 +17,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { RegisterComponent } from './components/register/register.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule,
+    MatIconModule
   ],
   providers: [
     {

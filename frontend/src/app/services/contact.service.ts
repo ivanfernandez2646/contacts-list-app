@@ -14,8 +14,18 @@ export class ContactService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createContact(contact: Contact): Observable<Contact> {
-    return this.httpClient.post<Contact>(`${this.apiRoute}/contacts`, { contact })
+  getContactsByUserId(userId: string): Observable<Contact[]> {
+    return this.httpClient.get<Contact[]>(`${this.apiRoute}/contacts/${userId}`)
+      .pipe(
+        map((res: Contact[]) => {
+          return res;
+        }),
+        catchError(e => throwError(e))
+      );
+  }
+
+  createContact(userId: string, contact: Contact): Observable<Contact> {
+    return this.httpClient.post<Contact>(`${this.apiRoute}/contacts`, { userId, ...contact })
       .pipe(
         map((res: Contact) => {
           return res;

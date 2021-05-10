@@ -39,18 +39,10 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.get('/users', async (req, res) => {
+app.get('/contacts/:id', async (req, res) => {
+    const id = req.params.id;
     try {
-        const users = await mongoWorkflow.getUsers();
-        res.send(users);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-
-app.get('/contacts', async (req, res) => {
-    try {
-        const contacts = await mongoWorkflow.getContacts();
+        const contacts = await mongoWorkflow.getContactsByUserId(id);
         res.send(contacts);
     } catch (err) {
         res.status(500).send(err.message);
@@ -58,12 +50,12 @@ app.get('/contacts', async (req, res) => {
 });
 
 app.post('/contacts', async (req, res) => {
-    console.log(req.body);
+    const userId = req.body.userId;
     const name = req.body.name;
     const lastName = req.body.lastName;
     const telephone = req.body.telephone;
     try {
-        const createdContact = await mongoWorkflow.createContact(name, lastName, telephone);
+        const createdContact = await mongoWorkflow.createContact(userId, name, lastName, telephone);
         res.send(createdContact);
     } catch (err) {
         res.status(500).send(err.message);

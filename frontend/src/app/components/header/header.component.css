@@ -11,6 +11,8 @@ header {
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 #headerWrapper > * {

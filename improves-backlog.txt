@@ -1,0 +1,9 @@
+Backend
+
+1. Find by id field, instead username for future improves
+2. Avoid user logged can see other users contacts
+3. Avoid create user without password from postman
+
+Front/Backend
+
+1. Add image to contacts

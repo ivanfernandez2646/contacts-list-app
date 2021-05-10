@@ -1,1 +1,8 @@
+.contactCard {
+  border: 1px solid var(--color-primary);
+  transition: transform 0.2s;
+}
 
+.contactCard:hover {
+  transform: scale(1.1);
+}

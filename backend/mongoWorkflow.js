@@ -25,10 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     },
-    contactsIds: {
-        type: [mongoose.Schema.Types.ObjectId],
+    contacts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Contact",
         default: null
-    }
+    }]
 }, {
     versionKey: false
 });
@@ -45,6 +46,11 @@ const contactSchema = new mongoose.Schema({
     telephone: {
         type: String,
         required: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null
     }
 }, {
     versionKey: false
@@ -82,24 +88,38 @@ async function register(username, password) {
     throw new Error('Username exist in db');
 }
 
-async function createContact(name, lastName, telephone) {
-    console.log(name, lastName, telephone)
-    const newContact = new Contact();
-    newContact.name = name;
-    newContact.lastName = lastName;
-    newContact.telephone = telephone
-    const contactSaved = await newContact.save();
-    return contactSaved;
-}
-
-async function getUsers() {
-    const users = await User.find({});
-    return users;
-}
-
-async function getContacts() {
-    const contacts = await Contact.find({});
+async function getContactsByUserId(userId) {
+    const contacts = await Contact.find({
+        user: userId
+    });
     return contacts;
+}
+
+async function createContact(userId, name, lastName, telephone) {
+    const session = await Contact.startSession();
+    session.startTransaction();
+    try {
+        const newContact = new Contact();
+        newContact.name = name;
+        newContact.lastName = lastName;
+        newContact.telephone = telephone;
+        newContact.user = userId;
+        const contactSaved = await newContact.save();
+
+        const updateUser = await User.findOne({
+            _id: userId,
+        });
+        updateUser.contacts.push(newContact._id);
+        await updateUser.save();
+
+        await session.commitTransaction();
+        session.endSession();
+        return contactSaved;
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
+    }
 }
 
 // Helpers functions
@@ -112,7 +132,6 @@ async function existUser(username) {
 module.exports = {
     login,
     register,
-    getUsers,
-    getContacts,
+    getContactsByUserId,
     createContact
 };

@@ -1,1 +1,18 @@
-<p>contact-card works!</p>
+<mat-card class="contactCard">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+            <mat-icon>person</mat-icon>
+        </div>
+        <mat-card-title>{{ contact.name }}</mat-card-title>
+        <mat-card-subtitle>{{ contact.lastName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <span>
+            Tel. <h2>{{ contact.telephone }}</h2>
+        </span>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="accent" type="submit">Edit</button>
+        <button mat-raised-button color="warn" type="submit">Delete</button>
+    </mat-card-actions>
+</mat-card>
