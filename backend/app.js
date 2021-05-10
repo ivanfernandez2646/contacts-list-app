@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'dev';
 const cors = require('cors');
@@ -12,8 +11,8 @@ app.use(cors({
 }));
 
 // Bodyparser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.json());
+app.use(express.urlencoded({
     extended: true
 }));
 
@@ -41,13 +40,33 @@ app.post('/register', async (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
-    const users = await mongoWorkflow.getUsers();
-    res.send(users);
+    try {
+        const users = await mongoWorkflow.getUsers();
+        res.send(users);
+    } catch (err) {
+        res.send(500, err);
+    }
 });
 
 app.get('/contacts', async (req, res) => {
-    const contacts = await mongoWorkflow.getContacts();
-    res.send(contacts);
+    try {
+        const contacts = await mongoWorkflow.getContacts();
+        res.send(contacts);
+    } catch (err) {
+        res.send(500, err);
+    }
+});
+
+app.post('/contacts', async (req, res) => {
+    const name = req.body.name;
+    const lastName = req.body.lastName;
+    const telephone = req.body.telephone;
+    try {
+        const createdContact = await mongoWorkflow.createContact(name, lastName, telephone);
+        res.send(createdContact);
+    } catch (err) {
+        res.send(500, err);
+    }
 });
 
 // Listen

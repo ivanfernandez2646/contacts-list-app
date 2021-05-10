@@ -70,6 +70,15 @@ async function register(username, password) {
     throw 'Username exist in db';
 }
 
+async function createContact(name, lastName, telephone) {
+    const newContact = new Contact();
+    newContact.name = name;
+    newContact.lastName = lastName;
+    newContact.telephone = telephone
+    const contactSaved = await newContact.save();
+    return contactSaved;
+}
+
 async function getUsers() {
     const users = await User.find({});
     return users;
@@ -91,5 +100,6 @@ module.exports = {
     login,
     register,
     getUsers,
-    getContacts
+    getContacts,
+    createContact
 };
