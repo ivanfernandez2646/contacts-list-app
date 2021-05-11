@@ -7,8 +7,6 @@ mongoose.connect('mongodb+srv://ivan:RBBpJvy6wm9maftx@cluster0.ew7po.gcp.mongodb
     useUnifiedTopology: true
 });
 
-
-// TODO: Connection only when login and logout, not all the time
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -41,10 +39,16 @@ const contactSchema = new mongoose.Schema({
     },
     lastName: {
         type: String,
-        required: true
+        required: false
     },
     telephone: {
         type: String,
+        validate: {
+            validator: function (val) {
+                return val.match(/[0-9]{9}/);
+            },
+            message: "You must provide 9 numeric digits."
+        },
         required: true
     },
     user: {
@@ -89,6 +93,10 @@ async function register(username, password) {
 }
 
 async function getContactsByUserId(userId) {
+    if (!userId) {
+        throw new Error('UserId parameter is mandatory');
+    }
+
     const contacts = await Contact.find({
         user: userId
     });
@@ -96,6 +104,10 @@ async function getContactsByUserId(userId) {
 }
 
 async function createContact(userId, name, lastName, telephone) {
+    if (!userId) {
+        throw new Error('UserId parameter is mandatory');
+    }
+
     const session = await Contact.startSession();
     session.startTransaction();
     try {
