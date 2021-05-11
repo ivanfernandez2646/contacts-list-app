@@ -12,11 +12,19 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Telephone</mat-label>
-            <input matInput type="text" id="txtTelephone" placeholder="telephone" formControlName="telephone">
+            <input matInput type="tel" id="txtTelephone" placeholder="telephone" formControlName="telephone"
+                pattern="[0-9]{9}">
+            <mat-error
+                *ngIf="contactForm.controls['telephone'].invalid && contactForm.controls['telephone'].errors.required">
+                Telephone obligatory
+            </mat-error>
+            <mat-error
+                *ngIf="contactForm.controls['telephone'].invalid && contactForm.controls['telephone'].errors.pattern">
+                Number invalid. Required 9 numeric digits</mat-error>
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
-        <button mat-button mat-dialog-close>No Thanks</button>
-        <button mat-button cdkFocusInitial type="submit">Ok</button>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button cdkFocusInitial type="submit">Create</button>
     </div>
 </form>
