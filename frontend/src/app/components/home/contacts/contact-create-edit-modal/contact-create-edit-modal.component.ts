@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Contact } from 'src/app/models/contact';
 import { User } from 'src/app/models/user';
 import { ContactService } from 'src/app/services/contact.service';
@@ -21,11 +21,20 @@ export class ContactCreateEditModalComponent implements OnInit {
   });
 
   constructor(private dialogRef: MatDialogRef<ContactCreateEditModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: Contact,
               private fb: FormBuilder, private contactService: ContactService, private userService: UserService) {
     this.userService.loggedUser$.subscribe(user => this.loggedUser = user);
   }
 
   ngOnInit(): void {
+    if (this.data) {
+      this.contactForm.get('name')
+        .setValue(this.data.name);
+      this.contactForm.get('lastName')
+        .setValue(this.data.lastName);
+      this.contactForm.get('telephone')
+        .setValue(this.data.telephone);
+    }
   }
 
   onSubmit(): void {
@@ -33,13 +42,25 @@ export class ContactCreateEditModalComponent implements OnInit {
       const name = this.contactForm.get('name').value;
       const lastName = this.contactForm.get('lastName').value;
       const telephone = this.contactForm.get('telephone').value;
-      const newContact: Contact = { name, lastName, telephone };
-      this.contactService.createContact(this.loggedUser._id, newContact)
-        .subscribe({
-          next: (contact) => {
-            this.dialogRef.close(contact);
-          }
-        });
+
+      if (this.data._id) {
+        const editedContact: Contact = { name, lastName, telephone };
+        this.contactService.editContact(this.data._id, editedContact)
+          .subscribe({
+            next: (contact) => {
+              this.dialogRef.close(contact);
+            }
+          });
+      } else {
+        const newContact: Contact = { name, lastName, telephone };
+        this.contactService.createContact(this.loggedUser._id, newContact)
+          .subscribe({
+            next: (contact) => {
+              this.dialogRef.close(contact);
+            }
+          });
+      }
+
     }
   }
 }

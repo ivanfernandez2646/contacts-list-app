@@ -42,6 +42,16 @@ app.post('/register', async (req, res) => {
 app.get('/contacts/:id', async (req, res) => {
     const id = req.params.id;
     try {
+        const contacts = await mongoWorkflow.getContactById(id);
+        res.send(contacts);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+app.get('/contacts', async (req, res) => {
+    const id = req.query.userId;
+    try {
         const contacts = await mongoWorkflow.getContactsByUserId(id);
         res.send(contacts);
     } catch (err) {
@@ -57,6 +67,19 @@ app.post('/contacts', async (req, res) => {
     try {
         const createdContact = await mongoWorkflow.createContact(userId, name, lastName, telephone);
         res.send(createdContact);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+app.put('/contacts/:id', async (req, res) => {
+    const id = req.params.id;
+    const name = req.body.name;
+    const lastName = req.body.lastName;
+    const telephone = req.body.telephone;
+    try {
+        const contacts = await mongoWorkflow.editContact(id, name, lastName, telephone);
+        res.send(contacts);
     } catch (err) {
         res.status(500).send(err.message);
     }

@@ -92,6 +92,17 @@ async function register(username, password) {
     throw new Error('Username exist in db');
 }
 
+async function getContactById(id) {
+    if (!id) {
+        throw new Error('Id parameter is mandatory');
+    }
+
+    const contact = await Contact.findById({
+        _id: id
+    });
+    return contact;
+}
+
 async function getContactsByUserId(userId) {
     if (!userId) {
         throw new Error('UserId parameter is mandatory');
@@ -134,6 +145,22 @@ async function createContact(userId, name, lastName, telephone) {
     }
 }
 
+async function editContact(id, name, lastName, telephone) {
+    const contact = await Contact.findById({
+        _id: id
+    });
+
+    if (contact) {
+        contact.name = name;
+        contact.lastName = lastName;
+        contact.telephone = telephone;
+        await contact.save();
+        return contact;
+    }
+
+    throw new Error('Contact not found');
+}
+
 // Helpers functions
 async function existUser(username) {
     return await User.exists({
@@ -144,6 +171,8 @@ async function existUser(username) {
 module.exports = {
     login,
     register,
+    getContactById,
     getContactsByUserId,
-    createContact
+    createContact,
+    editContact
 };

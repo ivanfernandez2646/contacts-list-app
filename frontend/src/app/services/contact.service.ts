@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -16,8 +16,19 @@ export class ContactService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getContactById(id: string): Observable<Contact[]> {
+    return this.httpClient.get<Contact[]>(`${this.apiRoute}/contacts/${id}`)
+      .pipe(
+        map((res: Contact[]) => {
+          return res;
+        }),
+        catchError(e => throwError(e))
+      );
+  }
+
   getContactsByUserId(userId: string): Observable<Contact[]> {
-    return this.httpClient.get<Contact[]>(`${this.apiRoute}/contacts/${userId}`)
+    const params = new HttpParams().set('userId', userId);
+    return this.httpClient.get<Contact[]>(`${this.apiRoute}/contacts`, { params })
       .pipe(
         map((res: Contact[]) => {
           return res;
@@ -29,6 +40,18 @@ export class ContactService {
   createContact(userId: string, contact: Contact): Observable<Contact> {
     this.userHasDoneOperationSource.next(undefined);
     return this.httpClient.post<Contact>(`${this.apiRoute}/contacts`, { userId, ...contact })
+      .pipe(
+        map((res: Contact) => {
+          this.userHasDoneOperationSource.next(true);
+          return res;
+        }),
+        catchError(e => throwError(e))
+      );
+  }
+
+  editContact(id: string, contact: Contact): Observable<Contact> {
+    this.userHasDoneOperationSource.next(undefined);
+    return this.httpClient.put<Contact>(`${this.apiRoute}/contacts/${id}`, { ...contact })
       .pipe(
         map((res: Contact) => {
           this.userHasDoneOperationSource.next(true);

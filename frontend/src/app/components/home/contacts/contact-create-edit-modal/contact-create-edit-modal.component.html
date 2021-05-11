@@ -1,5 +1,5 @@
 <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-    <h1 mat-dialog-title>Create contact</h1>
+    <h1 mat-dialog-title>{{!this.data ? "Create": "Edit"}} contact</h1>
     <div mat-dialog-content>
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
@@ -25,6 +25,6 @@
     </div>
     <div mat-dialog-actions>
         <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button cdkFocusInitial type="submit">Create</button>
+        <button mat-button cdkFocusInitial type="submit">Save</button>
     </div>
 </form>
