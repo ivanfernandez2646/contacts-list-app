@@ -6,3 +6,15 @@
 .contactCard:hover {
   transform: scale(1.1);
 }
+
+@media only screen and (max-width: 350px) {
+  .contactCardButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+
+  .contactCardButtonsContainer > button {
+    margin: 0;
+  }
+}
