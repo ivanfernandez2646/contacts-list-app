@@ -15,8 +15,8 @@ export class ContactCreateEditModalComponent implements OnInit {
 
   loggedUser: User;
   contactForm = this.fb.group({
-    name: ['', Validators.required],
-    lastName: [''],
+    name: ['', [Validators.required, Validators.maxLength(15)]],
+    lastName: ['', Validators.maxLength(20)],
     telephone: ['', Validators.required]
   });
 
@@ -43,7 +43,7 @@ export class ContactCreateEditModalComponent implements OnInit {
       const lastName = this.contactForm.get('lastName').value;
       const telephone = this.contactForm.get('telephone').value;
 
-      if (this.data._id) {
+      if (this.data?._id) {
         const editedContact: Contact = { name, lastName, telephone };
         this.contactService.editContact(this.data._id, editedContact)
           .subscribe({

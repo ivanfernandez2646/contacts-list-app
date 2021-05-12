@@ -35,11 +35,13 @@ const userSchema = new mongoose.Schema({
 const contactSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        maxlength: 15,
     },
     lastName: {
         type: String,
-        required: false
+        required: false,
+        maxlength: 20,
     },
     telephone: {
         type: String,
@@ -49,7 +51,7 @@ const contactSchema = new mongoose.Schema({
             },
             message: "You must provide 9 numeric digits."
         },
-        required: true
+        required: true,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
