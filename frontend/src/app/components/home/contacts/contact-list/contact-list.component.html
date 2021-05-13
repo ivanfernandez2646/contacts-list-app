@@ -1,3 +1,6 @@
-<div id="contactListContainer">
+<div id="contactListContainer" *ngIf="contacts?.length > 0; else noContacts">
     <app-contact-card *ngFor="let contact of contacts" [contact]="contact"></app-contact-card>
 </div>
+<ng-template #noContacts>
+    <h2 class="text-center">No contacts</h2>
+</ng-template>
