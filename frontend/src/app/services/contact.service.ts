@@ -60,4 +60,16 @@ export class ContactService {
         catchError(e => throwError(e))
       );
   }
+
+  deleteContact(id: string): Observable<Contact> {
+    this.userHasDoneOperationSource.next(undefined);
+    return this.httpClient.delete<Contact>(`${this.apiRoute}/contacts/${id}`)
+      .pipe(
+        map((res: Contact) => {
+          this.userHasDoneOperationSource.next(true);
+          return res;
+        }),
+        catchError(e => throwError(e))
+      );
+  }
 }

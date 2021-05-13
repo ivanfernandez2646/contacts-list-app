@@ -29,6 +29,7 @@ export class ContactCardComponent implements OnInit {
   }
 
   deleteContact(): void {
-
+    this.contactService.deleteContact(this.contact._id)
+      .subscribe(res => console.log(res));
   }
 }

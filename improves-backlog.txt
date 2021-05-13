@@ -11,4 +11,5 @@ Front/Backend
 Front
 
 1. Use async pipe and tries to refactor suscriptions to observables (next, error)
-2. Crear componentes para formulario (input)
+2. Snackbar messages
+2. Create components to forms (input)
