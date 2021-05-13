@@ -85,6 +85,16 @@ app.put('/contacts/:id', async (req, res) => {
     }
 });
 
+app.delete('/contacts/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const result = await mongoWorkflow.deleteContact(id);
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
 // Listen
 app.listen(port, () => {
     if (env === 'dev') {

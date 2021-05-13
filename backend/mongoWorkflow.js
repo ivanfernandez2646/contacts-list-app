@@ -163,6 +163,39 @@ async function editContact(id, name, lastName, telephone) {
     throw new Error('Contact not found');
 }
 
+async function deleteContact(id) {
+    const contact = await Contact.findById({
+        _id: id
+    });
+
+    if (contact) {
+        const session = await Contact.startSession();
+        session.startTransaction();
+        try {
+            const deletedContact = await contact.deleteOne();
+            const userWithThisContact = await User.findOne({
+                contacts: {
+                    $in: contact._id
+                },
+            });
+
+            const index = userWithThisContact.contacts.findIndex(c => c === contact.id);
+            userWithThisContact.contacts.splice(index, 1);
+            await userWithThisContact.save();
+
+            await session.commitTransaction();
+            session.endSession();
+            return deletedContact;
+        } catch (error) {
+            await session.abortTransaction();
+            session.endSession();
+            throw error;
+        }
+    }
+
+    throw new Error('Contact not found');
+}
+
 // Helpers functions
 async function existUser(username) {
     return await User.exists({
@@ -176,5 +209,6 @@ module.exports = {
     getContactById,
     getContactsByUserId,
     createContact,
-    editContact
+    editContact,
+    deleteContact
 };
