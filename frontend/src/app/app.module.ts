@@ -21,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ContactCreateEditModalComponent } from './components/home/contacts/contact-create-edit-modal/contact-create-edit-modal.component';
+import { GenericConfirmDialogComponent } from './components/generic-confirm-dialog/generic-confirm-dialog.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ContactCreateEditModalComponent } from './components/home/contacts/cont
     ContactListComponent,
     ContactCardComponent,
     RegisterComponent,
-    ContactCreateEditModalComponent
+    ContactCreateEditModalComponent,
+    GenericConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
