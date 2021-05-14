@@ -39,6 +39,11 @@ export class ContactService {
 
   createContact(userId: string, contact: Contact): Observable<Contact> {
     this.userHasDoneOperationSource.next(undefined);
+    const formData: any = new FormData();
+    formData.append('name', contact.name);
+    formData.append('lastName', contact.lastName);
+    formData.append('telephone', contact.telephone);
+    formData.append('img', contact.img);
     return this.httpClient.post<Contact>(`${this.apiRoute}/contacts`, { userId, ...contact })
       .pipe(
         map((res: Contact) => {
@@ -51,7 +56,15 @@ export class ContactService {
 
   editContact(id: string, contact: Contact): Observable<Contact> {
     this.userHasDoneOperationSource.next(undefined);
-    return this.httpClient.put<Contact>(`${this.apiRoute}/contacts/${id}`, { ...contact })
+    const formData: any = new FormData();
+    formData.append('name', contact.name);
+    formData.append('lastName', contact.lastName);
+    formData.append('telephone', contact.telephone);
+    formData.append('img', contact.img);
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    return this.httpClient.put<Contact>(`${this.apiRoute}/contacts/${id}`, formData)
       .pipe(
         map((res: Contact) => {
           this.userHasDoneOperationSource.next(true);

@@ -3,6 +3,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 const env = process.env.NODE_ENV || 'dev';
 const cors = require('cors');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage: storage
+});
 const mongoWorkflow = require('./mongoWorkflow');
 
 // Cors
@@ -11,10 +16,10 @@ app.use(cors({
 }));
 
 // Bodyparser
-app.use(express.json());
 app.use(express.urlencoded({
-    extended: true
+    extended: false
 }));
+app.use(express.json());
 
 // API Methods
 app.post('/login', async (req, res) => {
@@ -64,21 +69,31 @@ app.post('/contacts', async (req, res) => {
     const name = req.body.name;
     const lastName = req.body.lastName;
     const telephone = req.body.telephone;
+    const img = req.file;
+    let imgBase64 = undefined;
+    if (img) {
+        imgBase64 = `data:${img.mimetype};base64,${img.buffer.toString('base64')}`;
+    }
     try {
-        const createdContact = await mongoWorkflow.createContact(userId, name, lastName, telephone);
+        const createdContact = await mongoWorkflow.createContact(userId, name, lastName, telephone, imgBase64);
         res.send(createdContact);
     } catch (err) {
         res.status(500).send(err.message);
     }
 });
 
-app.put('/contacts/:id', async (req, res) => {
+app.put('/contacts/:id', upload.single('img'), async (req, res) => {
     const id = req.params.id;
     const name = req.body.name;
     const lastName = req.body.lastName;
     const telephone = req.body.telephone;
+    const img = req.file;
+    let imgBase64 = undefined;
+    if (img) {
+        imgBase64 = `data:${img.mimetype};base64,${img.buffer.toString('base64')}`;
+    }
     try {
-        const contacts = await mongoWorkflow.editContact(id, name, lastName, telephone);
+        const contacts = await mongoWorkflow.editContact(id, name, lastName, telephone, imgBase64);
         res.send(contacts);
     } catch (err) {
         res.status(500).send(err.message);

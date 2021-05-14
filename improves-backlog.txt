@@ -1,15 +1,15 @@
 Backend
 
-1. Find by id field, instead username for future improves
-2. Avoid user logged can see other users contacts
-3. Avoid create user without password from postman
+1. Find by id field, instead username for future improves. DONE
+2. Avoid create user without password from postman. DONE
 
 Front/Backend
 
-1. Add image to contacts
+1. Add image to contacts. DONE
 
 Front
 
 1. Use async pipe and tries to refactor suscriptions to observables (next, error)
 2. Snackbar messages
-2. Create components to forms (input)
+3. Create components to forms (input)
+4. Traductions library (es, en)

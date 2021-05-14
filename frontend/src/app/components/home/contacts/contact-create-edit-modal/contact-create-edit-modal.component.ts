@@ -17,7 +17,8 @@ export class ContactCreateEditModalComponent implements OnInit {
   contactForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(15)]],
     lastName: ['', Validators.maxLength(20)],
-    telephone: ['', Validators.required]
+    telephone: ['', Validators.required],
+    img: ['']
   });
 
   constructor(private dialogRef: MatDialogRef<ContactCreateEditModalComponent>,
@@ -42,9 +43,10 @@ export class ContactCreateEditModalComponent implements OnInit {
       const name = this.contactForm.get('name').value;
       const lastName = this.contactForm.get('lastName').value;
       const telephone = this.contactForm.get('telephone').value;
+      const img = this.contactForm.get('img').value;
 
       if (this.data?._id) {
-        const editedContact: Contact = { name, lastName, telephone };
+        const editedContact: Contact = { name, lastName, telephone, img };
         this.contactService.editContact(this.data._id, editedContact)
           .subscribe({
             next: (contact) => {
@@ -52,7 +54,7 @@ export class ContactCreateEditModalComponent implements OnInit {
             }
           });
       } else {
-        const newContact: Contact = { name, lastName, telephone };
+        const newContact: Contact = { name, lastName, telephone, img };
         this.contactService.createContact(this.loggedUser._id, newContact)
           .subscribe({
             next: (contact) => {
@@ -63,4 +65,18 @@ export class ContactCreateEditModalComponent implements OnInit {
 
     }
   }
+
+  changeFile(evt: Event): void {
+    const element = evt.currentTarget as HTMLInputElement;
+    const file: File = element.files.item(0);
+
+    if (file.size > 3145728) {
+      alert('File is bigger than 3MB');
+      element.value = '';
+    } else {
+      this.contactForm.get('img')
+        .setValue(file);
+    }
+  }
+
 }

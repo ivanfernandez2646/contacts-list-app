@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     },
     passwordHash: {
         type: String,
-        default: null
+        required: true
     },
     contacts: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -52,6 +52,11 @@ const contactSchema = new mongoose.Schema({
             message: "You must provide 9 numeric digits."
         },
         required: true,
+    },
+    img: {
+        type: String,
+        default: null,
+        required: false
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -116,7 +121,7 @@ async function getContactsByUserId(userId) {
     return contacts;
 }
 
-async function createContact(userId, name, lastName, telephone) {
+async function createContact(userId, name, lastName, telephone, img) {
     if (!userId) {
         throw new Error('UserId parameter is mandatory');
     }
@@ -129,6 +134,7 @@ async function createContact(userId, name, lastName, telephone) {
         newContact.lastName = lastName;
         newContact.telephone = telephone;
         newContact.user = userId;
+        newContact.img = img;
         const contactSaved = await newContact.save();
 
         const updateUser = await User.findOne({
@@ -147,7 +153,7 @@ async function createContact(userId, name, lastName, telephone) {
     }
 }
 
-async function editContact(id, name, lastName, telephone) {
+async function editContact(id, name, lastName, telephone, img) {
     const contact = await Contact.findById({
         _id: id
     });
@@ -156,6 +162,7 @@ async function editContact(id, name, lastName, telephone) {
         contact.name = name;
         contact.lastName = lastName;
         contact.telephone = telephone;
+        contact.img = img;
         await contact.save();
         return contact;
     }

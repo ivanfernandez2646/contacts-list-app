@@ -4,9 +4,31 @@
   padding: 1rem !important;
 }
 
+#customUploadButton {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#customUploadContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+#customUploadContainer input[type="file"] {
+  display: none;
+}
+
 @media only screen and (max-width: 850px) {
   #contactFormDialogContent {
     flex-direction: column;
     row-gap: 1rem;
+  }
+
+  #customUploadContainer {
+    flex-direction: column;
+    row-gap: 0.5rem;
   }
 }

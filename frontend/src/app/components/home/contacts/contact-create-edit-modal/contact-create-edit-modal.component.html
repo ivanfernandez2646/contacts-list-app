@@ -1,4 +1,4 @@
-<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+<form enctype="multipart/form-data" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <h1 mat-dialog-title>{{!this.data ? "Create": "Edit"}} contact</h1>
     <div mat-dialog-content id="contactFormDialogContent">
         <mat-form-field appearance="outline">
@@ -32,6 +32,13 @@
                 *ngIf="contactForm.controls['telephone'].invalid && contactForm.controls['telephone'].errors.pattern">
                 Number invalid. Required 9 numeric digits</mat-error>
         </mat-form-field>
+    </div>
+    <div id="customUploadContainer">
+        <label id="customUploadButton">
+            <input type="file" accept="image/png, image/jpeg, image/x-icon" (change)="changeFile($event)" />
+            Upload image
+        </label>
+        <label>{{contactForm.controls['img'].value.name}}</label>
     </div>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>

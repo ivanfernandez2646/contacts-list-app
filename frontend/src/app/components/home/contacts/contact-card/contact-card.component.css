@@ -11,6 +11,23 @@
 
 .contactCardHeader {
   justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.contactName,
+.contactLastName {
+  margin-bottom: 0 !important;
+}
+
+.contactLastName {
+  padding-top: 8px;
+}
+
+.noImgInCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #c7c7c7;
 }
 
 @media only screen and (max-width: 350px) {
