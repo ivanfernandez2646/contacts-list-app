@@ -1,4 +1,6 @@
 const enc = require('./encryption');
+const User = require('./models/user');
+const Contact = require('./models/contact');
 
 // Connection
 const mongoose = require('mongoose');
@@ -12,63 +14,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log("we are connected");
 });
-
-// Schemas
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
-    passwordHash: {
-        type: String,
-        required: true
-    },
-    contacts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Contact",
-        default: null
-    }]
-}, {
-    versionKey: false
-});
-
-const contactSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        maxlength: 15,
-    },
-    lastName: {
-        type: String,
-        required: false,
-        maxlength: 20,
-    },
-    telephone: {
-        type: String,
-        validate: {
-            validator: function (val) {
-                return val.match(/[0-9]{9}/);
-            },
-            message: "You must provide 9 numeric digits."
-        },
-        required: true,
-    },
-    img: {
-        type: String,
-        default: null,
-        required: false
-    },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: null
-    }
-}, {
-    versionKey: false
-});
-
-const User = mongoose.model('User', userSchema);
-const Contact = mongoose.model('Contact', contactSchema);
 
 // Methods
 async function login(username, password) {

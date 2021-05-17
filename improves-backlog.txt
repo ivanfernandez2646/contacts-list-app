@@ -9,7 +9,7 @@ Front/Backend
 
 Front
 
-1. Use async pipe and tries to refactor suscriptions to observables (next, error)
-2. Snackbar messages
-3. Create components to forms (input)
-4. Traductions library (es, en)
+1. Use async pipe and tries to refactor suscriptions to observables (next, error).
+2. Create components for forms (input).
+3. Snackbar messages.
+4. Traductions library (es, en).
