@@ -10,19 +10,27 @@ const upload = multer({
 });
 const mongoWorkflow = require('./mongoWorkflow');
 
-// Cors
+// Generic router and build config
+const router = express.Router();
 app.use(cors({
-    origin: 'http://localhost:4200'
+    origin: '*'
 }));
+app.use('/api', router);
 
 // Bodyparser
 app.use(express.urlencoded({
-    extended: false
+    extended: true
 }));
 app.use(express.json());
 
-// API Methods
-app.post('/login', async (req, res) => {
+//Build config
+app.use(express.static(__dirname + '/dist'));
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
+
+router.post('/login', async (req, res) => {
+    console.log(req.body)
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -33,7 +41,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/register', async (req, res) => {
+router.post('/register', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -44,7 +52,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.get('/contacts/:id', async (req, res) => {
+router.get('/contacts/:id', async (req, res) => {
     const id = req.params.id;
     try {
         const contacts = await mongoWorkflow.getContactById(id);
@@ -54,7 +62,7 @@ app.get('/contacts/:id', async (req, res) => {
     }
 });
 
-app.get('/contacts', async (req, res) => {
+router.get('/contacts', async (req, res) => {
     const id = req.query.userId;
     try {
         const contacts = await mongoWorkflow.getContactsByUserId(id);
@@ -64,7 +72,7 @@ app.get('/contacts', async (req, res) => {
     }
 });
 
-app.post('/contacts', upload.single('img'), async (req, res) => {
+router.post('/contacts', upload.single('img'), async (req, res) => {
     const userId = req.body.userId;
     const name = req.body.name;
     const lastName = req.body.lastName;
@@ -82,7 +90,7 @@ app.post('/contacts', upload.single('img'), async (req, res) => {
     }
 });
 
-app.put('/contacts/:id', upload.single('img'), async (req, res) => {
+router.put('/contacts/:id', upload.single('img'), async (req, res) => {
     const id = req.params.id;
     const name = req.body.name;
     const lastName = req.body.lastName;
@@ -100,7 +108,7 @@ app.put('/contacts/:id', upload.single('img'), async (req, res) => {
     }
 });
 
-app.delete('/contacts/:id', async (req, res) => {
+router.delete('/contacts/:id', async (req, res) => {
     const id = req.params.id;
     try {
         const result = await mongoWorkflow.deleteContact(id);
