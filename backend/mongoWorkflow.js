@@ -162,7 +162,9 @@ async function editContact(id, name, lastName, telephone, img) {
         contact.name = name;
         contact.lastName = lastName;
         contact.telephone = telephone;
-        contact.img = img;
+        if (img) {
+            contact.img = img;
+        }
         await contact.save();
         return contact;
     }

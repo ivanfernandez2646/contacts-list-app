@@ -64,7 +64,7 @@ app.get('/contacts', async (req, res) => {
     }
 });
 
-app.post('/contacts', async (req, res) => {
+app.post('/contacts', upload.single('img'), async (req, res) => {
     const userId = req.body.userId;
     const name = req.body.name;
     const lastName = req.body.lastName;
