@@ -15,7 +15,6 @@ const router = express.Router();
 app.use(cors({
     origin: '*'
 }));
-app.use('/api', router);
 
 // Bodyparser
 app.use(express.urlencoded({
@@ -30,7 +29,6 @@ app.get('/', function (req, res) {
 });
 
 router.post('/login', async (req, res) => {
-    console.log(req.body)
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -117,6 +115,9 @@ router.delete('/contacts/:id', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
+// Use the router
+app.use('/api', router);
 
 // Listen
 app.listen(port, () => {
