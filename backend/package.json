@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prod": "cd ./../frontend && npm run buildProd && cd ./../backend && node app.js"
+    "prod": "cd ./../frontend && npm run buildProd && cd ./../backend && node app.js",
+    "prodV2": "node app.js"
   },
   "author": "ivan",
   "license": "ISC",
