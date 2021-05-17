@@ -1,1 +1,1 @@
-web: cd frontend && npm run buildProd
+web: npm start
