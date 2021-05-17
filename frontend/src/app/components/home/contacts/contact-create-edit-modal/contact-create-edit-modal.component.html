@@ -3,7 +3,7 @@
     <div mat-dialog-content id="contactFormDialogContent">
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
-            <input matInput type="text" id="txtName" placeholder="name" formControlName="name">
+            <input matInput type="text" id="txtName" placeholder="Name" formControlName="name">
             <mat-error *ngIf="contactForm.controls['name'].invalid">Name obligatory</mat-error>
             <mat-error *ngIf="contactForm.controls['name'].invalid && contactForm.controls['name'].errors.required">
                 Name is required
@@ -14,7 +14,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Last name</mat-label>
-            <input matInput type="text" id="txtLastName" placeholder="last name" formControlName="lastName">
+            <input matInput type="text" id="txtLastName" placeholder="Last name" formControlName="lastName">
             <mat-error
                 *ngIf="contactForm.controls['lastName'].invalid && contactForm.controls['lastName'].errors.maxlength">
                 Last name must be 20 characters at most
@@ -22,7 +22,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Telephone</mat-label>
-            <input matInput type="tel" id="txtTelephone" placeholder="telephone" formControlName="telephone"
+            <input matInput type="tel" id="txtTelephone" placeholder="Telephone" formControlName="telephone"
                 pattern="[0-9]{9}">
             <mat-error
                 *ngIf="contactForm.controls['telephone'].invalid && contactForm.controls['telephone'].errors.required">
