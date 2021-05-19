@@ -37,7 +37,7 @@
             <input type="file" accept="image/png, image/jpeg, image/x-icon" (change)="changeFile($event)" />
             Upload image
         </label>
-        <label>{{contactForm.controls['img'].value.name}}</label>
+        <label id="customUploadLabel">{{contactForm.controls['img'].value.name}}</label>
     </div>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
