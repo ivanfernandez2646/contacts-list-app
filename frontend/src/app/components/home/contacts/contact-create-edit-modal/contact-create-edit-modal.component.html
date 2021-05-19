@@ -4,7 +4,6 @@
         <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput type="text" id="txtName" placeholder="Name" formControlName="name">
-            <mat-error *ngIf="contactForm.controls['name'].invalid">Name obligatory</mat-error>
             <mat-error *ngIf="contactForm.controls['name'].invalid && contactForm.controls['name'].errors.required">
                 Name is required
             </mat-error>
