@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         .subscribe({
           next: (user) => {
             this.router.navigateByUrl('/home');
-            this.snackBar.open('Log in successfull', 'OK', { duration: 3000 });
+            this.snackBar.open('Successful log in', 'OK', { duration: 3000 });
           }
         });
     }

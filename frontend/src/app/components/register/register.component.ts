@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
         .subscribe({
           next: (user) => {
             this.router.navigateByUrl('/home');
-            this.snackBar.open('Sign in successfull', 'OK', { duration: 3000 });
+            this.snackBar.open('Successful sign in', 'OK', { duration: 3000 });
           }
         });
     }

@@ -21,6 +21,10 @@
   display: none;
 }
 
+#customUploadLabel {
+  word-break: break-all;
+}
+
 @media only screen and (max-width: 850px) {
   #contactFormDialogContent {
     flex-direction: column;
